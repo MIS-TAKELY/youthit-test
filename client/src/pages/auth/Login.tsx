@@ -1,7 +1,7 @@
 
 
 import React, { useState } from "react"
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 const Login = () => {
@@ -64,15 +64,10 @@ const Login = () => {
               />
               <button
                 type="button"
-                aria-label="Toggle password visibility"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-indigo-600"
               >
-                {showPassword ? (
-                  <AiOutlineEyeInvisible size={22} />
-                ) : (
-                  <AiOutlineEye size={22} />
-                )}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
