@@ -7,7 +7,7 @@ export const addProduct = (data: Product) =>
 
 // Get all products
 export const getProducts = () =>
-  api.get<Product[]>("/getProduct")
+  api.get<Product[]>("/getProducts")
 
 // Get single product
 export const getProductById = (id: string) =>
