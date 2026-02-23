@@ -18,6 +18,7 @@ const ProductsList = () => {
   const fetchProducts = async () => {
     try {
       const res = await getProducts()
+      console.log("response-->",res.data);
       setProducts(res.data)
     } catch (err) {
       console.error("Failed to fetch products", err)
@@ -68,9 +69,8 @@ const ProductsList = () => {
             </thead>
             <tbody>
               {products.length > 0 ? (
-                products.map((product, idx) => (
+                products?.map((product) => (
                   <tr key={product._id} className="border-b hover:bg-gray-50">
-                    <td className="px-4 py-2">{idx + 1}</td>
                     <td className="px-4 py-2">{product.description}</td>
                     <td className="px-4 py-2">{product.brand}</td>
                     <td className="px-4 py-2">${product.price}</td>

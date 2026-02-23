@@ -8,8 +8,15 @@ import { getProducts, deleteProduct } from "../../api/product.api"
 const AdminDashboard = () => {
   const [products, setProducts] = useState<Product[]>([])
 
+
+  const getProduct=async()=>{
+const res= await getProducts()
+console.log("products-->",res)
+  }
+
   useEffect(() => {
-    getProducts().then((res) => setProducts(res.data))
+    getProduct()
+    
   }, [])
 
   const handleDelete = async (id: string | undefined) => {
@@ -62,7 +69,7 @@ const AdminDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {products && products?.map((product) => (
                 <tr key={product._id} className="border-b hover:bg-gray-50">
                   <td className="px-4 py-2">{product.brand}</td>
                   <td className="px-4 py-2">{product.category}</td>
