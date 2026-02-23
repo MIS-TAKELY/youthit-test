@@ -20,6 +20,8 @@ const Login = () => {
     try {
       const res = await login({ email, password })
 
+      console.log("res",res)
+
       // Save JWT token
       localStorage.setItem("token", res.data.token)
 
