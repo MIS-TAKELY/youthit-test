@@ -1,11 +1,11 @@
-import { Routes, Route } from "react-router-dom"
-import Login from "../auth/Login"
-import Signup from "../auth/Register"
-import ForgotPassword from "../auth/ForgetPassword"
-import AdminDashboard from "../../components/dashboard/AdminDashboard"
-import ProtectedRoute from "./ProtectedRoute"
-import ProductsList from "../../components/dashboard/ProductList"
-import Products from "../../components/user/Products"
+import { Route, Routes } from "react-router-dom";
+import AdminDashboard from "../../components/dashboard/AdminDashboard";
+import ProductsList from "../../components/dashboard/ProductList";
+import Products from "../../components/user/Products";
+import ForgotPassword from "../auth/ForgetPassword";
+import Login from "../auth/Login";
+import Signup from "../auth/Register";
+import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes = () => {
   return (
@@ -36,6 +36,4 @@ const AppRoutes = () => {
   );
 };
 
-      
-
-export default AppRoutes
+export default AppRoutes;
