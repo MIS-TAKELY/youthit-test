@@ -33,7 +33,7 @@ const EditProduct = () => {
     if (!form || !form._id) return
 
     await updateProduct(form)
-    navigate("/dashboard") // or /dashboard/products
+    navigate("/dashboard") 
   }
 
   if (loading) return <p className="p-6">Loading...</p>
