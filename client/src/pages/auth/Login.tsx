@@ -1,19 +1,38 @@
-
-
-import React, { useState } from "react"
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-import { Link } from "react-router-dom"
+import  { useState } from "react"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { Link, useNavigate } from "react-router-dom"
+import { login } from "../../api/auth.api"
 
 const Login = () => {
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError(null)
+    setLoading(true)
 
-    // TODO: API call here
-    console.log({ email, password })
+    try {
+      const res = await login({ email, password })
+
+      // Save JWT token
+      localStorage.setItem("token", res.data.token)
+
+      // Redirect to admin dashboard
+      navigate("/dashboard")
+    } catch (err: any) {
+      console.error(err)
+      setError(
+        err?.response?.data?.message || "Invalid email or password"
+      )
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -22,13 +41,18 @@ const Login = () => {
 
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">
-            Login
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-800">Login</h1>
           <p className="text-gray-500 mt-2">
             Welcome back! Please sign in
           </p>
         </div>
+
+        {/* Error */}
+        {error && (
+          <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -64,15 +88,10 @@ const Login = () => {
               />
               <button
                 type="button"
-                aria-label="Toggle password visibility"
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-indigo-600"
               >
-                {showPassword ? (
-                  <AiOutlineEyeInvisible size={22} />
-                ) : (
-                  <AiOutlineEye size={22} />
-                )}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
@@ -94,9 +113,10 @@ const Login = () => {
           {/* Button */}
           <button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition"
+            disabled={loading}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50"
           >
-            Sign In
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 

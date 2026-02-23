@@ -1,16 +1,21 @@
 import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { register } from "../../api/auth.api"
 
-const Register: React.FC = () => {
+const Register = () => {
+  const navigate = useNavigate()
+
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-  const [error, setError] = useState("")
+  const [error, setError] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (password !== confirmPassword) {
@@ -18,9 +23,17 @@ const Register: React.FC = () => {
       return
     }
 
-    setError("")
-    console.log({ username, email, password })
-    // TODO: API call
+    setError(null)
+    setLoading(true)
+
+    try {
+      await register({ username, email, password })
+      navigate("/login")
+    } catch (err: any) {
+      setError(err?.response?.data?.message || "Registration failed")
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -36,6 +49,13 @@ const Register: React.FC = () => {
             Sign up to get started
           </p>
         </div>
+
+        {/* Error */}
+        {error && (
+          <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded">
+            {error}
+          </div>
+        )}
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -87,9 +107,9 @@ const Register: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 hover:text-indigo-600"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-indigo-600"
               >
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
@@ -110,32 +130,33 @@ const Register: React.FC = () => {
               />
               <button
                 type="button"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-gray-500 hover:text-indigo-600"
+                onClick={() =>
+                  setShowConfirmPassword(!showConfirmPassword)
+                }
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-indigo-600"
               >
-                {showConfirmPassword ? "Hide" : "Show"}
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
 
-          {/* Error Message */}
-          {error && (
-            <p className="text-sm text-red-600">{error}</p>
-          )}
-
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition"
+            disabled={loading}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition disabled:opacity-50"
           >
-            Sign Up
+            {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
 
         {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?
-          <Link to="/login" className="ml-1 text-indigo-600 font-medium hover:underline">
+          <Link
+            to="/login"
+            className="ml-1 text-indigo-600 font-medium hover:underline"
+          >
             Login
           </Link>
         </p>
