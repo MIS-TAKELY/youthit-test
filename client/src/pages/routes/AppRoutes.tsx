@@ -5,6 +5,7 @@ import ForgotPassword from "../auth/ForgetPassword"
 import AdminDashboard from "../../components/dashboard/AdminDashboard"
 import ProtectedRoute from "./ProtectedRoute"
 import ProductsList from "../../components/dashboard/ProductList"
+import Products from "../../components/user/Products"
 
 const AppRoutes = () => {
     return (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
             <Route path="/" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+             <Route path="/products" element={<Products />} />
 
             {/* Admin dashboard routes */}
             <Route
