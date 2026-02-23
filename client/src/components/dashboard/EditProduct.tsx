@@ -32,6 +32,8 @@ const EditProduct = () => {
     e.preventDefault()
     if (!form || !form._id) return
 
+    console.log("form-->",form)
+
     await updateProduct(form)
     navigate("/dashboard") 
   }
