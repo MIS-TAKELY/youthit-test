@@ -11,7 +11,7 @@ export const getProductById = (id: string) =>
   api.get<{ product: Product }>(`/getProduct`, { params: { id } })
 
 export const updateProduct = ( data: Product) =>
-  api.put(`/updateProduct/${data._id}`, data)
+  api.patch(`/updateProduct/${data._id}`, data)
 
 export const deleteProduct = (_id: string) =>
   api.delete(`/deleteProduct/${_id}`)

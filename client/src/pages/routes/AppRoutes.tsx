@@ -7,6 +7,7 @@ import Login from "../auth/Login";
 import Signup from "../auth/Register";
 import ProtectedRoute from "./ProtectedRoute";
 import AddProduct from "../../components/dashboard/AddProduct";
+import EditProduct from "../../components/dashboard/EditProduct";
 
 const AppRoutes = () => {
   return (
@@ -24,7 +25,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      
+
       <Route
         path="/dashboard/products"
         element={
@@ -39,6 +40,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute>
             <AddProduct />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/dashboard/products/edit/:id"
+        element={
+          <ProtectedRoute>
+            <EditProduct />
           </ProtectedRoute>
         }
       />

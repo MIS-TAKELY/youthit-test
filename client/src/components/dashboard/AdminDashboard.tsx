@@ -30,7 +30,7 @@ const AdminDashboard = () => {
   // Delete product
   const handleDelete = async (id?: string) => {
     if (!id) return
-    console.log("deletig producct",id)
+    console.log("deletig producct", id)
     await deleteProduct(id)
     setProducts(products.filter((p) => p._id !== id))
   }
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
                     <td className="px-4 py-2 font-semibold">Rs. {product.price}</td>
                     <td className="px-4 py-2 flex gap-2">
                       <button
-                        onClick={() => navigate(`/dashboard/edit-product/${product._id}`)}
+                        onClick={() => navigate(`/dashboard/products/edit/${product._id}`)}
                         className="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
                       >
                         Edit
