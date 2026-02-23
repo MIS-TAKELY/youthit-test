@@ -56,11 +56,16 @@ export const getProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    console.log("paramas-->",req.params)
-    const product = await productModel.findByIdAndUpdate(req.params.id,req.body);
+    console.log("paramas-->", req.params);
+    console.log("paramas-->", req.user._id);
+    if (req.user._id !== req.body.seller._id) {
+      throw new Error("Unauthorize access");
+    }
+    const product = await productModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+    );
     if (!product) return res.status(404).json({ message: "Product not found" });
-
-  
 
     return res.status(200).json({ message: "Product updated", product });
   } catch (error) {
@@ -72,10 +77,13 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    console.log("paramas-->",req.params.id)
+    console.log("paramas-->", req.params.id);
+
+    if (req.user._id !== req.body.seller._id) {
+      throw new Error("Unauthorize access");
+    }
     const product = await productModel.findByIdAndDelete(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found" });
-
 
     return res.status(200).json({ message: "Product deleted" });
   } catch (error) {
