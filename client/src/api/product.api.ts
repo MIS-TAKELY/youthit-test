@@ -11,7 +11,7 @@ export const getProducts = () =>
 
 // Get single product
 export const getProductById = (id: string) =>
-  api.get<Product>(`/products/${id}`)
+  api.get<{ product: Product }>(`/v1/getProduct`, { params: { id } })
 
 // Update product
 export const updateProduct = (id: string, data: Product) =>

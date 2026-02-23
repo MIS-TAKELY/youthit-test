@@ -5,46 +5,37 @@ import ForgotPassword from "../auth/ForgetPassword"
 import AdminDashboard from "../../components/dashboard/AdminDashboard"
 import ProtectedRoute from "./ProtectedRoute"
 import ProductsList from "../../components/dashboard/ProductList"
-import AddProduct from "../../components/dashboard/AddProduct"
 import Products from "../../components/user/Products"
 
 const AppRoutes = () => {
-    return (
-        <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-             <Route path="/products" element={<Products />} />
+  return (
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/products" element={<Products />} />
+      {/* Admin dashboard routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      ,
+      <Route
+        path="/dashboard/products"
+        element={
+          <ProtectedRoute>
+            <ProductsList />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+};
 
-            {/* Admin dashboard routes */}
-            <Route
-                path="/dashboard"
-                element={
-                    <ProtectedRoute>
-                        <AdminDashboard />
-                    </ProtectedRoute>
-                }
-            />,
-
-            <Route
-                path="/dashboard/products"
-                element={
-                    <ProtectedRoute>
-                        <ProductsList />
-                    </ProtectedRoute>
-                }
-            />
-
-            <Route
-                path="/dashboard/products/add"
-                element={
-                    <ProtectedRoute>
-                        <AddProduct />
-                    </ProtectedRoute>
-                }
-            />
-        </Routes>
-    )
-}
+      
 
 export default AppRoutes
