@@ -21,7 +21,7 @@ console.log("products-->",res)
 
   const handleDelete = async (id: string | undefined) => {
     if (!id) return
-    await deleteProduct(id)
+    await deleteProduct()
     setProducts(products.filter((p) => p._id !== id))
   }
 

@@ -160,11 +160,11 @@ export const filterProduct = async (req, res) => {
     }
 
     if (category) {
-      query.category = category;
+      query.category = { $regex: category, $options: "i" };
     }
 
     if (brand) {
-      query.brand = brand;
+      query.brand = { $regex: brand, $options: "i" };
     }
 
     if (minPrice || maxPrice) {
@@ -176,7 +176,7 @@ export const filterProduct = async (req, res) => {
     if (inStock === "true") {
       query.stock = { $gt: 0 };
     }
-
+    console.log("wuery", query);
     const skip = (page - 1) * limit;
 
     const products = await productModel
