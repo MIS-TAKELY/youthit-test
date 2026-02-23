@@ -1,43 +1,44 @@
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import Sidebar from "../../components/layout/Sidebar"
-import Header from "../../components/layout/Header"
-import type { Product } from "../../types/product"
-import { getProducts, deleteProduct } from "../../api/product.api"
-import { FaEdit, FaTrash, FaPlus } from "react-icons/fa"
+import { useEffect, useState } from "react";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { deleteProduct, getProducts } from "../../api/product.api";
+import Header from "../../components/layout/Header";
+import Sidebar from "../../components/layout/Sidebar";
+import type { Product } from "../../types/product";
 
 const ProductsList = () => {
-  const [products, setProducts] = useState<Product[]>([])
-  const navigate = useNavigate()
+  const [products, setProducts] = useState<Product[]>([]);
+  const navigate = useNavigate();
 
   // Fetch products
   useEffect(() => {
-    fetchProducts()
-  }, [])
+    fetchProducts();
+  }, []);
 
   const fetchProducts = async () => {
     try {
-      const res = await getProducts()
-      console.log("Products response:", res.data)
-      // adjust if your API returns directly array
-      setProducts(res.data.products || res.data)
-    } catch (error) {
-      console.error("Failed to fetch products", error)
+      const res = await getProducts();
+      console.log("response-->",res)
+      const productsArray: Product[] = res.data.products;
+      setProducts(productsArray);
+    } catch (err) {
+      console.error("Failed to fetch products", err);
     }
-  }
+  };
 
-  // Delete product
-  const handleDelete = async (id?: string) => {
-    if (!id) return
-    if (!window.confirm("Are you sure you want to delete this product?")) return
+  // Delete a product
+  const handleDelete = async (id: string | undefined) => {
+    if (!id) return;
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
 
     try {
-      await deleteProduct(id)
-      setProducts((prev) => prev.filter((p) => p._id !== id))
-    } catch (error) {
-      console.error("Failed to delete product", error)
+      await deleteProduct(id);
+      setProducts(products.filter((p) => p._id !== id));
+    } catch (err) {
+      console.error("Failed to delete product", err);
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -138,7 +139,7 @@ const ProductsList = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductsList
+export default ProductsList;

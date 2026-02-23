@@ -25,10 +25,12 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  const handleFilter = (filtered: Product[]) => {
-    if (filtered.length === 0) {
+  const handleFilter = (filtered: Product[] | null) => {
+    if (filtered === null) {
+      // Reset: show all products
       setProducts(allProducts);
     } else {
+      // Show filtered results (could be empty)
       setProducts(filtered);
     }
   };
@@ -62,14 +64,13 @@ const Products = () => {
                   </p>
                   <div className="mt-3 flex justify-between items-center">
                     <span className="text-blue-600 font-semibold">
-                      ${product.price}
+                      Rs.{product.price}
                     </span>
                     <span
-                      className={`text-xs px-2 py-1 rounded ${
-                        product.stock > 0
+                      className={`text-xs px-2 py-1 rounded ${product.stock > 0
                           ? "bg-green-100 text-green-700"
                           : "bg-red-100 text-red-700"
-                      }`}
+                        }`}
                     >
                       {product.stock > 0 ? "In Stock" : "Out of Stock"}
                     </span>

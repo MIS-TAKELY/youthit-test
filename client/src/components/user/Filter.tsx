@@ -3,7 +3,7 @@ import { filterProducts } from "../../api/product.api";
 import type { Product } from "../../types/product";
 
 interface FilterProps {
-  onFilter: (products: Product[]) => void;
+  onFilter: (products: Product[] | null) => void;
 }
 
 function Filter({ onFilter }: FilterProps) {
@@ -45,7 +45,7 @@ function Filter({ onFilter }: FilterProps) {
     setMinPrice("");
     setMaxPrice("");
     setInStock(false);
-    onFilter([]);
+    onFilter(null);
   };
 
   return (

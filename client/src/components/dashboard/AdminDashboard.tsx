@@ -30,14 +30,9 @@ const AdminDashboard = () => {
   // Delete product
   const handleDelete = async (id?: string) => {
     if (!id) return
-    if (!window.confirm("Are you sure you want to delete this product?")) return
-
-    try {
-      await deleteProduct(id)
-      setProducts((prev) => prev.filter((p) => p._id !== id))
-    } catch (error) {
-      console.error("Delete failed", error)
-    }
+    console.log("deletig producct",id)
+    await deleteProduct(id)
+    setProducts(products.filter((p) => p._id !== id))
   }
 
   return (
