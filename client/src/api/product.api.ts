@@ -2,19 +2,19 @@ import { api } from "./axios"
 import type { Product } from "../types/product"
 
 export const addProduct = (data: Product) =>
-  api.post("/v1/createProduct", data)
+  api.post("/createProduct", data)
 
 export const getProducts = () =>
-  api.get<{ products: Product[] }>("/v1/getProducts")
+  api.get<{ products: Product[] }>("/getProducts")
 
 export const getProductById = (id: string) =>
-  api.get<{ product: Product }>(`/v1/getProduct`, { params: { id } })
+  api.get<{ product: Product }>(`/getProduct`, { params: { id } })
 
 export const updateProduct = ( data: Product) =>
-  api.put(`/v1/updateProduct`, data)
+  api.put(`/updateProduct`, data)
 
 export const deleteProduct = () =>
-  api.delete(`/v1/deleteProduct`)
+  api.delete(`/deleteProduct`)
 
 export interface FilterParams {
   keyword?: string
@@ -27,6 +27,6 @@ export interface FilterParams {
 
 export const filterProducts = (params: FilterParams) =>
   api.get<{ products: Product[]; total: number; page: number; totalPages: number }>(
-    "/v1/filterProducts",
+    "/filterProducts",
     { params }
   )
