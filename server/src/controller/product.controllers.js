@@ -1,5 +1,6 @@
 
-import Product from "../models/Product.js";
+
+import productModel from "../models/product.model.js";
 
 
 export const createProduct = async (req, res) => {
@@ -10,11 +11,10 @@ export const createProduct = async (req, res) => {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
-    const product = await Product.create({
+    const product = await productModel.create({
       name,
       description,
       price,
-      discountPrice,
       category,
       brand,
       stock,
@@ -30,7 +30,7 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate("seller", "name email");
+    const products = await productModel.find().populate("seller", "name email");
     return res.status(200).json({ products });
   } catch (error) {
     return res.status(500).json({ message: "Server error", error: error.message });
@@ -39,7 +39,7 @@ export const getProducts = async (req, res) => {
 
 export const getProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id).populate("seller", "name email");
+    const product = await productModel.findById(req.params.id).populate("seller", "name email");
     if (!product) return res.status(404).json({ message: "Product not found" });
 
     return res.status(200).json({ product });
@@ -51,10 +51,9 @@ export const getProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await productModel.findById(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    // Only seller who owns it or admin
     if (product.seller.toString() !== req.user._id.toString() && req.user.role !== "admin") {
       return res.status(403).json({ message: "Not authorized" });
     }
@@ -70,10 +69,9 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await productModel.findById(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    // Only seller who owns it or admin
     if (product.seller.toString() !== req.user._id.toString() && req.user.role !== "admin") {
       return res.status(403).json({ message: "Not authorized" });
     }

@@ -1,11 +1,10 @@
-// controllers/authController.js
 
 import jwt from "jsonwebtoken";
 import userModel from "../../models/user.model.js";
 
 const generateAccessToken = (user) => {
   return jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "1d",
   });
 };
 
@@ -18,7 +17,6 @@ const generateRefreshToken = (user) => {
 export const signupHandler = async (req, res) => {
   try {
 
-    // console.log("hello")
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
@@ -48,7 +46,6 @@ export const signupHandler = async (req, res) => {
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
