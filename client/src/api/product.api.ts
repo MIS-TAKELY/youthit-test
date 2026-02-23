@@ -8,7 +8,7 @@ export const getProducts = () =>
   api.get<{ products: Product[] }>("/getProducts")
 
 export const getProductById = (id: string) =>
-  api.get<{ product: Product }>(`/getProduct`, { params: { id } })
+  api.get<{ product: Product }>(`/getProduct/${id}`)
 
 export const updateProduct = ( data: Product) =>
   api.patch(`/updateProduct/${data._id}`, data)

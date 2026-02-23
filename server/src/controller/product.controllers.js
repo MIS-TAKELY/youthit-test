@@ -56,18 +56,11 @@ export const getProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const product = await productModel.findById(req.params.id);
+    console.log("paramas-->",req.params)
+    const product = await productModel.findByIdAndUpdate(req.params.id,req.body);
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    if (
-      product.seller.toString() !== req.user._id.toString() &&
-      req.user.role !== "admin"
-    ) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
-
-    Object.assign(product, req.body);
-    await product.save();
+  
 
     return res.status(200).json({ message: "Product updated", product });
   } catch (error) {
