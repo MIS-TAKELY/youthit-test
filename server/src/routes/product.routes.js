@@ -7,7 +7,7 @@ const productsRoute = express.Router();
 productsRoute.post("/createProduct", verifyToken, createProduct);
 productsRoute.get("/getProduct", getProduct);
 productsRoute.get("/getProducts", getProducts);
-productsRoute.patch("/updateProduct", updateProduct);
+productsRoute.patch("/updateProduct/:id", updateProduct);
 productsRoute.delete("/deleteProduct/:id", deleteProduct);
 productsRoute.get("/searchProducts", searchProducts);
 productsRoute.get("/filterProducts", filterProduct);
