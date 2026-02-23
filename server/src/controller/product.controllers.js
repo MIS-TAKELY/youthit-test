@@ -79,17 +79,11 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    const product = await productModel.findById(req.params.id);
+    console.log("paramas-->",req.params.id)
+    const product = await productModel.findByIdAndDelete(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found" });
 
-    if (
-      product.seller.toString() !== req.user._id.toString() &&
-      req.user.role !== "admin"
-    ) {
-      return res.status(403).json({ message: "Not authorized" });
-    }
 
-    await product.remove();
     return res.status(200).json({ message: "Product deleted" });
   } catch (error) {
     return res
@@ -160,11 +154,11 @@ export const filterProduct = async (req, res) => {
     }
 
     if (category) {
-      query.category = category;
+      query.category = { $regex: category, $options: "i" };
     }
 
     if (brand) {
-      query.brand = brand;
+      query.brand = { $regex: brand, $options: "i" };
     }
 
     if (minPrice || maxPrice) {
@@ -176,7 +170,7 @@ export const filterProduct = async (req, res) => {
     if (inStock === "true") {
       query.stock = { $gt: 0 };
     }
-
+    console.log("wuery", query);
     const skip = (page - 1) * limit;
 
     const products = await productModel

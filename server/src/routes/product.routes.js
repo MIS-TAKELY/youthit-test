@@ -5,10 +5,10 @@ import { verifyToken } from "../middlewares/auth.middleware.js";
 const productsRoute = express.Router();
 
 productsRoute.post("/createProduct", verifyToken, createProduct);
-productsRoute.post("/getProduct", getProduct);
+productsRoute.get("/getProduct", getProduct);
 productsRoute.get("/getProducts", getProducts);
-productsRoute.post("/updateProduct", updateProduct);
-productsRoute.post("/deleteProduct", deleteProduct);
+productsRoute.patch("/updateProduct", updateProduct);
+productsRoute.delete("/deleteProduct/:id", deleteProduct);
 productsRoute.get("/searchProducts", searchProducts);
 productsRoute.get("/filterProducts", filterProduct);
 
