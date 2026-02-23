@@ -6,7 +6,7 @@ import { register } from "../../api/auth.api"
 const Register = () => {
   const navigate = useNavigate()
 
-  const [username, setUsername] = useState("")
+  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
@@ -27,7 +27,7 @@ const Register = () => {
     setLoading(true)
 
     try {
-      await register({ username, email, password })
+      await register({ name, email, password })
       navigate("/login")
     } catch (err: any) {
       setError(err?.response?.data?.message || "Registration failed")
@@ -60,16 +60,16 @@ const Register = () => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
 
-          {/* Username */}
+          {/* name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Username
+              name
             </label>
             <input
               type="text"
               required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Enter your username"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
@@ -154,7 +154,7 @@ const Register = () => {
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?
           <Link
-            to="/login"
+            to="/"
             className="ml-1 text-indigo-600 font-medium hover:underline"
           >
             Login

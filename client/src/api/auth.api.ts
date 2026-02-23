@@ -13,19 +13,19 @@ export interface AuthUser {
 
 
 export interface LoginResponse {
-  token: string
+  accessToken: string
   user: AuthUser
 }
 
 export interface RegisterPayload {
-  username: string
+  name: string
   email: string
   password: string
 }
 
 // Login user
 export const login = (data: LoginPayload) =>
-  api.post<LoginResponse>("/auth/login", data)
+  api.post<LoginResponse>("/login", data)
 
 //  Logout user
 export const logout = () => {
@@ -34,4 +34,4 @@ export const logout = () => {
 
 // Register user
 export const register = (data: RegisterPayload) =>
-  api.post("/auth/register", data)
+  api.post("/signup", data)

@@ -20,8 +20,10 @@ const Login = () => {
     try {
       const res = await login({ email, password })
 
+      console.log("res",res)
+
       // Save JWT token
-      localStorage.setItem("token", res.data.token)
+      localStorage.setItem("token", res.data.accessToken)
 
       // Redirect to admin dashboard
       navigate("/dashboard")
@@ -124,7 +126,7 @@ const Login = () => {
         <p className="text-center text-sm text-gray-600 mt-6">
           Don&apos;t have an account?
           <Link
-            to="/register"
+            to="/signup"
             className="ml-1 text-indigo-600 font-medium hover:underline"
           >
             Sign up
