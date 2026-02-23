@@ -8,7 +8,7 @@ interface Props {
 
 const ProtectedRoute = ({ children }: Props) => {
   const token = localStorage.getItem("token") // JWT from login
-  return token ? children : <Navigate to="/login" replace />
+  return token ? children : <Navigate to="/login"  />
 }
 
 export default ProtectedRoute

@@ -7,7 +7,7 @@ const Sidebar = () => {
     { name: "Products", icon: <FaBoxOpen />, path: "/dashboard/products" },
     { name: "Users", icon: <FaUsers />, path: "/dashboard/users" },
   ]
-
+  
   return (
     <div className="w-64 bg-white h-screen shadow-md p-5 flex flex-col">
       <h1 className="text-xl font-bold text-indigo-600 mb-6">Admin Panel</h1>
