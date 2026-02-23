@@ -56,18 +56,16 @@ export const getProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
   try {
-    const product = await productModel.findById(req.params.id);
-    if (!product) return res.status(404).json({ message: "Product not found" });
-
-    if (
-      product.seller.toString() !== req.user._id.toString() &&
-      req.user.role !== "admin"
-    ) {
-      return res.status(403).json({ message: "Not authorized" });
+    console.log("paramas-->", req.params);
+    console.log("paramas-->", req.user._id);
+    if (req.user._id !== req.body.seller._id) {
+      throw new Error("Unauthorize access");
     }
-
-    Object.assign(product, req.body);
-    await product.save();
+    const product = await productModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+    );
+    if (!product) return res.status(404).json({ message: "Product not found" });
 
     return res.status(200).json({ message: "Product updated", product });
   } catch (error) {
@@ -79,10 +77,13 @@ export const updateProduct = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
   try {
-    console.log("paramas-->",req.params.id)
+    console.log("paramas-->", req.params.id);
+
+    if (req.user._id !== req.body.seller._id) {
+      throw new Error("Unauthorize access");
+    }
     const product = await productModel.findByIdAndDelete(req.params.id);
     if (!product) return res.status(404).json({ message: "Product not found" });
-
 
     return res.status(200).json({ message: "Product deleted" });
   } catch (error) {
