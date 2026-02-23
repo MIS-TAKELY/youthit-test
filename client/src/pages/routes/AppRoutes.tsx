@@ -23,7 +23,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      ,
+      
       <Route
         path="/dashboard/products"
         element={
