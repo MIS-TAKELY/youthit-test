@@ -1,17 +1,22 @@
 import { api } from "./axios"
 import type { Product } from "../types/product"
 
+// Add product
 export const addProduct = (data: Product) =>
-  api.post("/products", data)
+  api.post<Product>("/creataProduct", data)
 
+// Get all products
 export const getProducts = () =>
-  api.get<Product[]>("/products")
+  api.get<Product[]>("/getProduct")
 
+// Get single product
 export const getProductById = (id: string) =>
   api.get<Product>(`/products/${id}`)
 
+// Update product
 export const updateProduct = (id: string, data: Product) =>
-  api.put(`/products/${id}`, data)
+  api.put<Product>(`/updateProduct/${id}`, data)
 
+// Delete product
 export const deleteProduct = (id: string) =>
-  api.delete(`/products/${id}`)
+  api.delete(`/deleteProduct/${id}`)

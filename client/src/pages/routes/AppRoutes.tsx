@@ -5,6 +5,7 @@ import ForgotPassword from "../auth/ForgetPassword"
 import AdminDashboard from "../../components/dashboard/AdminDashboard"
 import ProtectedRoute from "./ProtectedRoute"
 import ProductsList from "../../components/dashboard/ProductList"
+import AddProduct from "../../components/dashboard/AddProduct"
 
 const AppRoutes = () => {
     return (
@@ -28,6 +29,15 @@ const AppRoutes = () => {
                 element={
                     <ProtectedRoute>
                         <ProductsList />
+                    </ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/dashboard/products/add"
+                element={
+                    <ProtectedRoute>
+                        <AddProduct />
                     </ProtectedRoute>
                 }
             />

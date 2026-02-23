@@ -23,7 +23,7 @@ const Login = () => {
       console.log("res",res)
 
       // Save JWT token
-      localStorage.setItem("token", res.data.token)
+      localStorage.setItem("token", res.data.accessToken)
 
       // Redirect to admin dashboard
       navigate("/dashboard")

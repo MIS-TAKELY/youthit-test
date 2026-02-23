@@ -6,7 +6,6 @@ export interface Product {
     brand: string
     stock: number
     seller: string
-    isPublished: boolean
     images: string[]
     category: string
 }
