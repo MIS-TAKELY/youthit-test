@@ -10,7 +10,7 @@ export const getProducts = () =>
 export const getProductById = (id: string) =>
   api.get<{ product: Product }>(`/getProduct/${id}`)
 
-export const updateProduct = ( data: Product) =>
+export const updateProduct = (_id: string, data: Product) =>
   api.patch(`/updateProduct/${data._id}`, data)
 
 export const deleteProduct = (_id: string) =>
