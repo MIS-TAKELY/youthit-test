@@ -10,10 +10,10 @@ export const getProducts = () =>
 export const getProductById = (id: string) =>
   api.get<{ product: Product }>(`/v1/getProduct`, { params: { id } })
 
-export const updateProduct = (id: string, data: Product) =>
+export const updateProduct = ( data: Product) =>
   api.put(`/v1/updateProduct`, data)
 
-export const deleteProduct = (id: string) =>
+export const deleteProduct = () =>
   api.delete(`/v1/deleteProduct`)
 
 export interface FilterParams {
